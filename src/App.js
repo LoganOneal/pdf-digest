@@ -11,7 +11,7 @@ import {login, authFetch, useAuth, logout} from "./auth"
 const PrivateRoute = ({ children }) => {
   const [authed] = useAuth();
   
-  return authed ? children : <Navigate to="/" />;
+  return authed ? children : <Navigate to="/login" />;
 }
 
 export default function App() {

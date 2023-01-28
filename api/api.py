@@ -63,8 +63,8 @@ with app.app_context():
     db.create_all()
     if db.session.query(User).filter_by(username='Yasoob').count() < 1:
         db.session.add(User(
-          username='Yasoob',
-          password=guard.hash_password('strongpassword'),
+          username='user123',
+          password=guard.hash_password('password123'),
           roles='admin'
 		))
     db.session.commit()
