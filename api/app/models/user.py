@@ -1,5 +1,6 @@
 from app.extensions import db
 from flask_login import UserMixin
+from app.models.note import Note
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -8,7 +9,7 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(150))
     roles = db.Column(db.Text)
     is_active = db.Column(db.Boolean, default=True, server_default='true')
-    #files = db.relationship('File')
+    notes = db.relationship('Note')
 
     def __repr__(self):
         return f'<User "{self.email}">'
