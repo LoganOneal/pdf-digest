@@ -17,4 +17,23 @@
         <button type="submit" class="btn btn-primary">Add Note</button>
       </div>
     </form>
+
+    <h1 align="center">Files</h1>
+    <ul class="list-group list-group-flush" id="files">
+      {% for file in user.files %}
+      <li class="list-group-item">
+        {{ file.filename }}
+        <button type="button" class="close" onClick="deleteFile({{ file.id }})">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h1>File Upload</h1>
+    <form method="POST" name="file" id="file" action="files/upload" enctype="multipart/form-data">
+      <p><input type="file" name="file" accept=".pdf"></p>
+      <p><input type="submit" value="Submit"></p>
+    </form>
+
 {% endblock %}

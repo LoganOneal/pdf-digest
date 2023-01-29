@@ -18,9 +18,11 @@ def create_app(config_class=Config):
     # Register blueprints here
     from app.main import bp as main_bp
     from app.auth import bp as auth_bp
+    from app.files import bp as files_bp
 
     app.register_blueprint(auth_bp, url_prefix='/')
     app.register_blueprint(main_bp, url_prefix='/')
+    app.register_blueprint(files_bp, url_prefix='/files')
 
     # Add users for the example
     with app.app_context():
@@ -43,4 +45,4 @@ def create_app(config_class=Config):
         return User.query.get(int(id))
 
 
-    return app
+    return app    

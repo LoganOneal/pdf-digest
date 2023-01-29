@@ -1,5 +1,6 @@
 from flask_login import login_required, current_user
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import render_template, request, flash
+
 from app.extensions import db
 from app.models.note import Note
 from app.main import bp
