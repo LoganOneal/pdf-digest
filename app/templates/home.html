@@ -10,6 +10,9 @@
         <a type="button" class="btn btn-default float-right" aria-label="right-align" href="{{ url_for('files.download', fileId=file.id) }}">
           <span class="fa fa-download fa-lg" aria-hidden="true"></span>
         </a>
+        <button type="button" class="btn btn-primary float-right" aria-label="right-align">
+          Summarize
+        </button>
       </li>
       {% endfor %}
     </ul>
