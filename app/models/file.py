@@ -1,8 +1,8 @@
 from app.extensions import db
 from sqlalchemy.sql import func
-from app.extensions import db
 
 class File(db.Model):
+    __tablename__ = "file"
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(50))
     extension = db.Column(db.String(16))

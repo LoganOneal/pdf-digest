@@ -2,12 +2,11 @@ from flask_login import login_required, current_user
 from flask import request, flash, send_file, jsonify, redirect, url_for, Response
 from io import BytesIO
 import json
-import os 
 
 from app.extensions import db, grobidClient
 from app.models.file import File
 from app.files import bp
-from app.files.processing import parse_file
+from app.files.parsing import parse_file
 
 
 @bp.route('/upload', methods=['POST'])
@@ -15,7 +14,7 @@ from app.files.processing import parse_file
 def upload_file():
     if request.method == 'POST':
         file = request.files['file']
-        new_file = File(filename=file.filename, data=file.read(), user_id=current_user.id, extension = file.filename.split('.')[-1])
+        new_file = File(filename=file.filename.split('.', 1)[0], data=file.read(), user_id=current_user.id, extension = file.filename.split('.')[-1])
         db.session.add(new_file)
         db.session.commit()
         flash('File added!', category='success')
@@ -47,8 +46,15 @@ def delete_file():
 def parse(fileId):
     file = File.query.filter_by(id=fileId).first()
 
-    parsed_xml = parse_file(file)
+    article = parse_file(file)
+
+
+    #db.session.add(new_xml)
+    #db.session.commit()
+    flash('File parsed!', category='success')
 
     #return send_file(parse_file, download_name=file.filename, as_attachment=True)
+    #return Response(parsed_xml, mimetype='text/xml')
 
-    return Response(parsed_xml, mimetype='text/xml')
+    return redirect(url_for('main.home'))
+
