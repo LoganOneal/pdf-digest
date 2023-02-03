@@ -26,7 +26,7 @@ def remove_namespace(doc, namespace):
             elem.tag = elem.tag[nsl:]
 
 
-def parse_file(file):
+def parse_file(file) -> Article:
     if file.extension != 'pdf':
         print('File is not a PDF!')
         return None

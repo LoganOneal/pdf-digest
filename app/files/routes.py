@@ -5,6 +5,9 @@ import json
 
 from app.extensions import db, grobidClient
 from app.models.file import File
+from app.models.article import Article
+from app.models.section import Section
+from app.models.paragraph import Paragraph
 from app.files import bp
 from app.files.parsing import parse_file
 
@@ -48,13 +51,21 @@ def parse(fileId):
 
     article = parse_file(file)
 
+    article_model = Article(title=article.title,user_id=current_user.id)
+    db.session.add(article_model)
 
-    #db.session.add(new_xml)
-    #db.session.commit()
+    for section in article.sections:
+        section_model = Section(name=section.name, num=section.num)
+        article_model.sections.append(section_model)
+        db.session.add(section_model)
+
+        for paragraph in section.paragraphs:
+            paragraph_model = Paragraph(text=paragraph.text)
+            section_model.paragraphs.append(paragraph_model)
+            db.session.add(paragraph_model)
+
+    db.session.commit()
+    
     flash('File parsed!', category='success')
-
-    #return send_file(parse_file, download_name=file.filename, as_attachment=True)
-    #return Response(parsed_xml, mimetype='text/xml')
-
     return redirect(url_for('main.home'))
 

@@ -13,4 +13,4 @@
 /__pycache__
 
 # database
-*.db
+.db
