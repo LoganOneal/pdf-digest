@@ -1,9 +1,9 @@
 import os
 from app.models.file import File
 from app.extensions import grobidClient
-from grobid_client.api.pdf import process_fulltext_document
-from grobid_client.models import Article, ProcessForm
-from grobid_client.types import TEI, File
+from app.grobid_client.api.pdf import process_fulltext_document
+from app.grobid_client.models import Article, ProcessForm
+from app.grobid_client.types import TEI, File
 
 BASE_TEMP_DIR = 'temp'
 

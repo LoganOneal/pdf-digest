@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_praetorian import Praetorian
 from flask_cors import CORS
-from grobid_client import Client
+from app.grobid_client import Client
 
 db = SQLAlchemy()
 guard = Praetorian()

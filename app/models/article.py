@@ -2,7 +2,7 @@ from app.extensions import db
 from sqlalchemy.sql import func
 
 
-class Article(db.Model):
+class ArticleModel(db.Model):
     __tablename__ = "article_table"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))    
