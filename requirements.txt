@@ -1,3 +1,13 @@
 flask
 Flask-SQLAlchemy
 flask-login
+flask_praetorian
+flask_cors
+attr
+attrs
+httpx
+bs4
+transformers
+torch
+torchvision
+torchaudio

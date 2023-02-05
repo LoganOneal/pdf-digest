@@ -1,5 +1,6 @@
 from flask_login import login_required, current_user
 from flask import request, flash, send_file, jsonify, redirect, url_for, Response
+from sqlalchemy.orm import lazyload
 from io import BytesIO
 import json
 
@@ -10,6 +11,7 @@ from app.models.section import Section
 from app.models.paragraph import Paragraph
 from app.files import bp
 from app.files.parsing import parse_file
+from app.files.summarization import bart_summarize
 from app.grobid_client.types import UNSET 
 
 
@@ -77,5 +79,29 @@ def parse(fileId):
         db.session.commit() 
 
     flash('File parsed!', category='success')
+    return redirect(url_for('main.home'))
+
+@bp.route('/summarize/<articleID>')
+@login_required
+def summarize(articleID):
+    article = ArticleModel.query.filter_by(id=articleID).first()
+
+
+    paragraphs = Section.query.filter_by(id=5).first().paragraphs
+
+    text = ""
+
+    for par in paragraphs:
+        text += par.text
+
+    print("TEXT: ", text)
+
+
+    summary = bart_summarize(text, 100)
+
+    print("SUMMARY: ", summary)
+
+
+    flash('File summarized!', category='success')
     return redirect(url_for('main.home'))
 

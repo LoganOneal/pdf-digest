@@ -14,3 +14,8 @@
 
 # database
 .db
+
+# virtual env modules
+/venv/Lib/site-packages
+/venv/Scripts
+
