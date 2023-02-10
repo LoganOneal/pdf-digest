@@ -5,11 +5,10 @@ Copyright (c) 2019 - present AppSeed.us
 
 from apps.home import blueprint
 from flask import render_template, request
-from flask_login import login_required, current_user
+from flask_login import login_required
 from jinja2 import TemplateNotFound
 
 from apps.config import API_GENERATOR
-from apps.models import File
 
 @blueprint.route('/index')
 @login_required
@@ -21,15 +20,12 @@ def index():
 def route_template(template):
 
     try:
+
         if not template.endswith('.html'):
             template += '.html'
 
         # Detect the current page
         segment = get_segment(request)
-
-        if segment == 'my-files':
-            files = File.query.filter_by(user_id=current_user.id).all()
-            return render_template('home/my-files.html', files=files)
 
         # Serve the file (if exists) from app/templates/home/FILE.html
         return render_template("home/" + template, segment=segment, API_GENERATOR=len(API_GENERATOR))

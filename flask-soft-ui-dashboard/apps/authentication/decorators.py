@@ -12,6 +12,7 @@ def token_required(func):
     def decorated(*args, **kwargs):
         if 'Authorization' in request.headers:
             token = request.headers['Authorization']
+            print("TOKEN",  token)
         else:
             return {
                        'message': 'Token is missing',

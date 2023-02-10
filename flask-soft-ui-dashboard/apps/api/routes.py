@@ -4,10 +4,10 @@ from flask import request, send_file
 from flask_restx import Api, Resource
 from werkzeug.datastructures import MultiDict
 from io import BytesIO
-from flask_login import current_user
 
 from apps.api import blueprint
 from apps.authentication.decorators import token_required
+from flask_login import current_user
 
 from apps.api.forms import *
 from apps.models    import *
@@ -131,8 +131,8 @@ class BookRoute(Resource):
                }, 200
 
 
-@api.route('/files/', methods=['POST', 'GET', 'DELETE'])
-@api.route('/files/<int:model_id>/', methods=['GET', 'DELETE'])
+@api.route('/file/', methods=['POST', 'GET', 'DELETE'])
+@api.route('/file/<int:model_id>/', methods=['GET', 'DELETE'])
 class FileRoute(Resource):
 
     ALLOWED_EXTENSIONS = set(['pdf'])
@@ -140,6 +140,7 @@ class FileRoute(Resource):
     def allowed_file(self,filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in self.ALLOWED_EXTENSIONS
     
+    @token_required
     def get(self, model_id: int = None):
         if model_id is None:
             return {
@@ -157,8 +158,12 @@ class FileRoute(Resource):
     
     @token_required
     def post(self):
+            print("AAAAAAA")
+            print(current_user.is_authenticated)
+            print(current_user.get_id())
             file = request.files['file']
             if file.filename == '':
+                print("No file selected for uploading")
                 return {
                            'message': 'No file selected for uploading',
                            'success': False
@@ -168,8 +173,7 @@ class FileRoute(Resource):
                 new_file = File(filename=file.filename.split('.', 1)[0], 
                               data=file.read(), 
                               extension = file.filename.split('.')[-1],
-                              user_id=current_user.id, 
-                              status="TEST"
+                              user_id=current_user.get_id(), 
                               )
                 db.session.add(new_file)
                 db.session.commit()
@@ -178,6 +182,7 @@ class FileRoute(Resource):
                 'success': True
                 }, 201
             else:
+                print("Allowed file types are pdf")
                 return {
                 'message': 'Allowed file types are pdf',
                 'success': False

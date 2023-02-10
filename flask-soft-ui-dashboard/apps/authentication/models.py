@@ -4,6 +4,7 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 from flask_login import UserMixin
+import jwt
 
 from sqlalchemy.orm import relationship
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
@@ -58,6 +59,15 @@ def request_loader(request):
     username = request.form.get('username')
     user = User.query.filter_by(username=username).first()
     return user if user else None
+
+'''
+@login_manager.request_loader
+def request_loader(request):
+    token = request.headers['Authorization']
+    data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=["HS256"])
+    user = User.query.filter_by(id=data['user_id']).first()
+    return user if user else None
+'''
 
 class OAuth(OAuthConsumerMixin, db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("Users.id", ondelete="cascade"), nullable=False)

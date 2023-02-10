@@ -18,10 +18,10 @@ class Book(db.Model):
     title = db.Column(db.String(64))
 
 class Status(Enum):
-    unprocesses = 1
-    parsing = 2
-    parsed = 3
-    summarized = 4
+    UNPROCESSED = 1
+    PARSING = 2
+    PARSED = 3
+    SUMMARIZED = 4
 
 class File(db.Model):
     __tablename__ = 'Files'
@@ -32,6 +32,15 @@ class File(db.Model):
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     filename = db.Column(db.String(50))
     extension = db.Column(db.String(8))
-    status = db.Column(db.String(8))
+    status = db.Column(db.Integer, default=Status.UNPROCESSED.value)))
     data = db.Column(db.LargeBinary)
+    
+    def __init__(self, filename, data, extension, user_id):
+        self.filename = filename
+        self.data = data
+        self.extension = extension
+        self.user_id = user_id
+
+    def __repr__(self):
+        return str(self.id)
 
