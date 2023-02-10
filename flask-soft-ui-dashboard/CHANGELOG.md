@@ -51,14 +51,14 @@
 ## [1.0.7] 2022-06-21
 ### Improvements
 
-- UI Update: `Soft UI Dashboard` v1.0.6
+- UI Update: `Doc-Digest` v1.0.6
 - Enhanced version:
   - `Dark Mode`
 
 ## [1.0.6] 2022-05-25
 ### Improvements
 
-- Built with [Soft UI Dashboard Generator](https://appseed.us/generator/soft-ui-dashboard/)
+- Built with [Doc-Digest Generator](https://appseed.us/generator/soft-ui-dashboard/)
   - Timestamp: `2022-05-25 10:05`
 - Added CDN/Static Server management
   - `ASSETS_ROOT` env variable
@@ -66,7 +66,7 @@
 ## [1.0.5] 2022-05-23
 ### Improvements 
 
-- UI Update: `Soft UI Dashboard` v1.0.5
+- UI Update: `Doc-Digest` v1.0.5
   - upgrade Bootstrap version to v5.1.3
   - upgrade ChartJs plugin version to v3.7.1
   - fix running 'npm install' issue
@@ -91,7 +91,7 @@
 ## [1.0.3] 2021-12-09
 ### Improvements
 
-- Bump UI: Soft UI Dashboard **v1.0.3**
+- Bump UI: Doc-Digest **v1.0.3**
 
 ## [1.0.2] 2021-11-08
 ### Improvements

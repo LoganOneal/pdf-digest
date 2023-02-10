@@ -32,7 +32,7 @@ class File(db.Model):
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     filename = db.Column(db.String(50))
     extension = db.Column(db.String(8))
-    status = db.Column(db.Integer, default=Status.UNPROCESSED.value)))
+    status = db.Column(db.Integer, default=Status.UNPROCESSED)
     data = db.Column(db.LargeBinary)
     
     def __init__(self, filename, data, extension, user_id):
