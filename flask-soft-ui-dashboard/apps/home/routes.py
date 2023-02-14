@@ -32,10 +32,8 @@ def route_template(template):
         print(segment)
         
         if segment == "my-files.html":
-            print("TEST")
             files = File.query.filter_by(user_id=current_user.id).all()
-            print(len(files))
-            return render_template("home/" + template, segment=segment, files=files)
+            return render_template("home/" + template, segment=segment, files=files, API_GENERATOR=len(API_GENERATOR))
         
         # Serve the file (if exists) from app/templates/home/FILE.html
         return render_template("home/" + template, segment=segment, API_GENERATOR=len(API_GENERATOR))

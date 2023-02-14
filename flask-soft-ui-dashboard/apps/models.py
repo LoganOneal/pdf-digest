@@ -43,4 +43,44 @@ class File(db.Model):
 
     def __repr__(self):
         return str(self.id)
+    
+class ArticleModel(db.Model):
+    __tablename__ = "article_table"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('Users.id'))    
+    title = db.Column(db.String(50))
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    sections = db.relationship("Section", back_populates="article")
+    
+    def __repr__(self):
+        return '<Article %r>' % (self.title)
+    
+
+class Paragraph(db.Model):
+    __tablename__ = "paragraph_table"
+    id = db.Column(db.Integer, primary_key=True)
+    text =  db.Column(db.String(5000))
+    
+    section_id = db.Column(db.Integer, db.ForeignKey("section_table.id"))
+    section = db.relationship("Section", back_populates="paragraphs")
+
+    def __repr__(self):
+        return '<Paragraph %r>' % (self.id)
+
+
+class Section(db.Model):
+    __tablename__ = "section_table"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    num =  db.Column(db.String(50))
+    article_id = db.Column(db.Integer, db.ForeignKey("article_table.id"))
+
+    article = db.relationship("ArticleModel", back_populates="sections")
+    paragraphs = db.relationship("Paragraph", back_populates="section")
+
+    def __repr__(self):
+        return '<Section %r>' % (self.name)
+
+
+
 

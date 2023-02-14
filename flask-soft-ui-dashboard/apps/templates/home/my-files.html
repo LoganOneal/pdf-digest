@@ -16,7 +16,9 @@
                 <h6 class="mb-0">My Files</h6>
               </div>
               <div class="col-6 text-end">
-                <a class="btn bg-gradient-dark mb-0" href="/upload.html"><i class="fas fa-plus"></i>&nbsp;&nbsp;Upload File(s)</a>
+                <label id="upload-btn" class="btn btn-default btn-file bg-gradient-dark mb-0">
+                  <input type="file" style="display: none;"><i class="fas fa-plus"></i>&nbsp;&nbsp;Upload File</input>
+                </label>
               </div>
             </div>
           </div>
@@ -53,9 +55,9 @@
                         <span class="text-secondary text-xs font-weight-bold">{{ file.date }}</span>
                       </td>
                       <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <button href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                           Summarize
-                        </a>
+                        </button>
                       </td>
                     </tr>
                   {% endfor %}
@@ -74,5 +76,56 @@
     
 {% endblock content %}
 
+
+
 <!-- Specific JS goes HERE --> 
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+
+  <script>
+
+    const token       = localStorage.getItem('token') || ''
+    let data          = []
+    let requestAction = 'post' // for update/add record
+
+    var fileUpload = document.getElementById('upload-btn')
+    var input = document.querySelector('input[type="file"]')
+
+    $(fileUpload).on('change', ':file', function() {
+      var input = $(this);
+      var numFiles = input.get(0).files ? input.get(0).files.length : 1;
+      var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+      input.trigger('fileselect', [numFiles, label]);
+    });
+
+    $(':file').on('fileselect', function () {
+      var file = this.files[0];
+      let formData = new FormData();           
+      formData.append("file", file);
+
+      console.log(file)
+
+      /*if (file.size > 4096) {
+        alert('max upload size is 4k');
+      }*/
+
+      $.ajax({
+        url: '/api/file/',
+        type: 'POST',
+        data: formData,
+        headers: {"Authorization": `${token}`},
+        contentType: false,
+        processData: false,
+        success: function(response){
+            if(response != 0){
+              alert('File uploaded!');
+            }else{
+              alert('File not uploaded!');
+            }
+        },
+      });
+      
+    });
+
+  </script>
+
+{% endblock javascripts %}
