@@ -46,7 +46,11 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">{{ file.extension }}</p>
+                        <p class="text-xs font-weight-bold mb-0">
+                          <button class="btn btn-link text-dark text-sm mb-0 px-0">
+                            <i class="fas fa-file-pdf text-lg me-1"></i>
+                            PDF
+                          </button></p>
                       </td>
                       <td class="align-middle text-center text-sm">
                         <span class="badge badge-sm bg-gradient-success">{{ file.status }}</span>
@@ -55,9 +59,9 @@
                         <span class="text-secondary text-xs font-weight-bold">{{ file.date }}</span>
                       </td>
                       <td class="align-middle">
-                        <button href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                           Summarize
-                        </button>
+                        </a>
                       </td>
                     </tr>
                   {% endfor %}
@@ -98,15 +102,25 @@
     });
 
     $(':file').on('fileselect', function () {
+      var validExtension = ['pdf'];
+
+
       var file = this.files[0];
       let formData = new FormData();           
       formData.append("file", file);
 
-      console.log(file)
-
       /*if (file.size > 4096) {
         alert('max upload size is 4k');
       }*/
+      
+      var fileName = file.name
+      var fileExt = fileName.substr(fileName.lastIndexOf('.') + 1);
+
+
+      if ($.inArray(fileExt, validExtension) == -1){
+           alert("Invalid file type");
+           return false;
+      }
 
       $.ajax({
         url: '/api/file/',
