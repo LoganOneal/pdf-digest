@@ -8,7 +8,7 @@ from apps.grobid_client.types import TEI, File
 BASE_TEMP_DIR = 'temp'
 
 
-def parse(file) -> Article:
+async def parse(file) -> Article:
     if file.extension != 'pdf':
         print('File is not a PDF!')
         return None

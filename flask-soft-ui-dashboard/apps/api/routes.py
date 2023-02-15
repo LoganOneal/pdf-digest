@@ -85,10 +85,10 @@ class FileRoute(Resource):
                }, 200
 
 @blueprint.route('/file/parse/<int:file_id>/')
-def parse(file_id):
+async def parse(file_id):
     file = File.query.filter_by(id=file_id).first()
 
-    article = parse_util(file)
+    article = await parse_util(file)
 
     article_model = ArticleModel(title=article.title,user_id=current_user.get_id())
     db.session.add(article_model)
@@ -112,4 +112,4 @@ def parse(file_id):
     
         db.session.commit() 
 
-    return redirect(url_for('main.home'))
+    return "Done!"

@@ -59,9 +59,9 @@
                         <span class="text-secondary text-xs font-weight-bold">{{ file.date }}</span>
                       </td>
                       <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Summarize
-                        </a>
+                        <button id="process-btn" onclick="parseFile('{{file.id}}')" class="btn btn-lg btn-link pe-3 ps-0 mb-0 ms-auto" >
+                          <span class="badge bg-gradient-secondary">Process</span>
+                        </button>
                       </td>
                     </tr>
                   {% endfor %}
@@ -104,7 +104,6 @@
     $(':file').on('fileselect', function () {
       var validExtension = ['pdf'];
 
-
       var file = this.files[0];
       let formData = new FormData();           
       formData.append("file", file);
@@ -137,8 +136,26 @@
             }
         },
       });
-      
     });
+
+    function parseFile(fileID) {
+      console.log("PARSING: ", fileID);
+
+      $.ajax({
+        url: '/api/file/parse/' + fileID,
+        headers: {"Authorization": `${token}`},
+        contentType: false,
+        processData: false,
+        success: function(response){
+            if(response != 0){
+              alert('File parsed!');
+            }else{
+              alert('File failed to parse!');
+            }
+        },
+      });
+
+    }
 
   </script>
 

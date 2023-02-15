@@ -27,3 +27,4 @@ httpx
 bs4
 python-dateutil
 flask_cors
+aioflask
