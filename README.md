@@ -1,4 +1,4 @@
-# [Doc-Digest Flask](https://appseed.us/product/soft-ui-dashboard/flask/)
+# [Doc-Digest Flask](https://github.com/LoganOneal/doc-digest)
 
 
 
@@ -34,14 +34,6 @@ $ docker-compose up --build
 
 Visit `http://localhost:5085` in your browser. The app should be up & running.
 
-## ✨ Manual Build
-
-> 👉 Download the code 
-
-```bash
-$ git clone https://github.com/app-generator/flask-soft-ui-dashboard.git
-$ cd flask-soft-ui-dashboard
-```
 
 <br />
 
