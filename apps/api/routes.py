@@ -135,5 +135,5 @@ async def summarize(articleID):
 
 
     flash('File summarized!', category='success')
-    return redirect(url_for('main.home'))
+    return redirect(url_for('main.dashboard'))
 

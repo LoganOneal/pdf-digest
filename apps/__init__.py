@@ -24,14 +24,14 @@ def register_extensions(app):
 
 
 def register_blueprints(app):
-    for module_name in ('authentication', 'home', 'api'):
+    for module_name in ('authentication', 'dashboard', 'api'):
         module = import_module('apps.{}.routes'.format(module_name))
         app.register_blueprint(module.blueprint)
 
     #from apps.api import blueprint as api_bp
     #app.register_blueprint(api_bp, url_prefix='/api')
     #app.register_blueprint(files_bp)
-    #app.register_blueprint(home_bp)
+    #app.register_blueprint(dashboard_bp)
 
 
 def configure_database(app):

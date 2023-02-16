@@ -30,7 +30,6 @@ class User(db.Model, UserMixin):
     files = db.relationship('File', backref='user')
 
 
-
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
             # depending on whether value is an iterable or not, we must

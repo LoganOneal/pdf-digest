@@ -1,5 +1,8 @@
 # [Doc-Digest Flask](https://github.com/LoganOneal/doc-digest)
 
+## TODO 
+
+SETUP ADMIN: https://stackoverflow.com/questions/61939800/role-based-authorization-in-flask-login
 
 ## Resources
 > https://flask.palletsprojects.com/
@@ -115,7 +118,7 @@ The project is coded using blueprints, app factory pattern, dual configuration p
    |
    |-- apps/
    |    |
-   |    |-- home/                           # A simple app that serve HTML files
+   |    |-- dashboard/                           # A simple app that serve HTML files
    |    |    |-- routes.py                  # Define app routes
    |    |
    |    |-- authentication/                 # Handles auth routes (login and register)
@@ -141,7 +144,7 @@ The project is coded using blueprints, app factory pattern, dual configuration p
    |    |    |    |-- login.html            # Login page
    |    |    |    |-- register.html         # Register page
    |    |    |
-   |    |    |-- home/                      # UI Kit Pages
+   |    |    |-- dashboard/                      # UI Kit Pages
    |    |         |-- index.html            # Index page
    |    |         |-- 404-page.html         # 404 page
    |    |         |-- *.html                # All other pages

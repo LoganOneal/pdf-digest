@@ -3,7 +3,7 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from apps.home import blueprint
+from apps.dashboard import blueprint
 from flask import render_template, request
 from flask_login import login_required
 from jinja2 import TemplateNotFound
@@ -11,11 +11,21 @@ from flask_login import current_user
 
 from apps.config import API_GENERATOR
 from apps.models import File
+from apps.authentication.models import User
 
 @blueprint.route('/index')
 @login_required
 def index():
-    return render_template('home/index.html', segment='index', API_GENERATOR=len(API_GENERATOR))
+    return render_template('dashboard/index.html', segment='index', API_GENERATOR=len(API_GENERATOR))
+
+
+@blueprint.route('/users.html')
+@login_required
+def users():
+    users = User.query.all()
+    print(users)
+    return render_template('dashboard/users.html', segment='users', users=users, API_GENERATOR=len(API_GENERATOR))
+
 
 @blueprint.route('/<template>')
 @login_required
@@ -31,18 +41,18 @@ def route_template(template):
 
         print(segment)
         
-        if segment == "my-files.html":
-            files = File.query.filter_by(user_id=current_user.id).all()
-            return render_template("home/" + template, segment=segment, files=files, API_GENERATOR=len(API_GENERATOR))
+        if segment == "all-files.html":
+            files = File.query.all()
+            return render_template("dashboard/" + template, segment=segment, files=files, API_GENERATOR=len(API_GENERATOR))
         
-        # Serve the file (if exists) from app/templates/home/FILE.html
-        return render_template("home/" + template, segment=segment, API_GENERATOR=len(API_GENERATOR))
+        # Serve the file (if exists) from app/templates/dashboard/FILE.html
+        return render_template("dashboard/" + template, segment=segment, API_GENERATOR=len(API_GENERATOR))
 
     except TemplateNotFound:
-        return render_template('home/page-404.html'), 404
+        return render_template('dashboard/page-404.html'), 404
 
     except:
-        return render_template('home/page-500.html'), 500
+        return render_template('dashboard/page-500.html'), 500
 
 
 # Helper - Extract current page name from request

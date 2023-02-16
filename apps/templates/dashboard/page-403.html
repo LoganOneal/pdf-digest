@@ -1,6 +1,6 @@
 {% extends 'layouts/base-fullscreen.html' %}
 
-{% block title %} Error 404 {% endblock title %}
+{% block title %} Error 403 {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -10,22 +10,21 @@
   <section>
 
     <div class="page-header section-height-75">
-
       <div class="container">
         <div class="row">
           <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
             <div class="card card-plain mt-8">
               <div class="card-header pb-0 text-left bg-transparent">
                 <h3 class="font-weight-bolder text-danger text-gradient">
-                    Error 500
+                    Error 403
                 </h3>
                 <p class="mb-0 text-danger">
-                    Server Error - If the problem persist, please access support.
+                    Access Denied - If the problem persist, please access support.
                 </p>
               </div>
               <div class="card-body">
                   <div class="text-center">
-                    <a type="button" href="/" class="btn bg-gradient-info w-100 mt-4 mb-0">HOME</a>
+                    <a type="button" href="/" class="btn bg-gradient-info w-100 mt-4 mb-0">dashboard</a>
                   </div>
               </div>
               <div class="card-footer text-center pt-0 px-lg-2 px-1">
@@ -43,7 +42,6 @@
           </div>
         </div>
       </div>
-
     </div>
     
   </section>
