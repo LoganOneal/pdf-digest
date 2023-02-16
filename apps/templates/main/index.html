@@ -1,42 +1,41 @@
-{% extends 'dashboard-layouts/base.html' %}
+{% extends 'main-layouts/base.html' %}
 
-{% block title %} All FIles {% endblock title %}
+{% block title %} Landing Page {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
-  <!-- -------- START HEADER 8 w/ card over right bg image ------- -->
+{% block content %}
   <header>
     <div class="page-header min-vh-85">
       <div>
-        <img class="position-absolute fixed-top ms-auto w-50 h-100 z-index-0 d-none d-sm-none d-md-block border-radius-section border-top-end-radius-0 border-top-start-radius-0 border-bottom-end-radius-0" src="../assets/img/curved-images/curved6.jpg" alt="image">
+        <img class="position-absolute fixed-top ms-auto w-50 h-100 z-index-0 d-none d-sm-none d-md-block border-radius-section border-top-end-radius-0 border-top-start-radius-0 border-bottom-end-radius-0" src="{{ config.ASSETS_ROOT }}/img/curved-images/curved6.jpg" alt="image">
       </div>
       <div class="container">
         <div class="row">
           <div class="col-lg-7 d-flex">
             <div class="card card-body blur text-md-start text-center px-sm-5 shadow-lg mt-sm-5 py-sm-5">
-              <h2 class="text-gradient text-primary mb-0">Soft Design System.</h2>
-              <h2 class="text-dark mb-4">Choose the best</h2>
+              <h2 class="text-gradient text-primary mb-0">Doc Digest</h2>
+              <h2 class="text-dark mb-4">A document summarization platform</h2>
               <p class="lead text-dark pe-md-5 me-md-5">
-                Find the story of Creative Tim&#39;s most complex design system and
-                all the work that make this design available.
+                Summarize files into a brief and easily understandable content. Process information and learn 3X-5X faster by focusing on only key points!
               </p>
               <div class="buttons">
-                <button type="button" class="btn btn-rounded bg-gradient-primary mt-4">Contact Us</button>
-                <button type="button" class="btn btn-rounded btn-outline-secondary mt-4 ms-2">Read More</button>
+                <a type="button" class="btn btn-lg btn-rounded bg-gradient-primary mt-4" href="/wizard">Get Started</a>
+                <button type="button" class="btn btn-lg text-primary shadow-none mt-4">Learn More</button>
               </div>
               <div class="row mt-2">
                 <div class="col-md-3 col-6 p-0">
-                  <img class="w-100" src="../assets/img/logos/gray-logos/logo-pinterest.svg" alt="logo">
+                  <img class="w-100" src="{{ config.ASSETS_ROOT }}/img/logos/gray-logos/logo-pinterest.svg" alt="logo">
                 </div>
                 <div class="col-md-3 col-6 p-0">
-                  <img class="w-100" src="../assets/img/logos/gray-logos/logo-netflix.svg" alt="logo">
+                  <img class="w-100" src="{{ config.ASSETS_ROOT }}/img/logos/gray-logos/logo-netflix.svg" alt="logo">
                 </div>
                 <div class="col-md-3 col-6 p-0">
-                  <img class="w-100" src="../assets/img/logos/gray-logos/logo-coinbase.svg" alt="logo">
+                  <img class="w-100" src="{{ config.ASSETS_ROOT }}/img/logos/gray-logos/logo-coinbase.svg" alt="logo">
                 </div>
                 <div class="col-md-3 col-6 p-0">
-                  <img class="w-100" src="../assets/img/logos/gray-logos/logo-nasa.svg" alt="logo">
+                  <img class="w-100" src="{{ config.ASSETS_ROOT }}/img/logos/gray-logos/logo-nasa.svg" alt="logo">
                 </div>
               </div>
             </div>
@@ -46,6 +45,7 @@
     </div>
   </header>
   <!-- -------- END HEADER 8 w/ card over right bg image ------- -->
+  
   <!-- -------- START Features w/ 4 infos - just colored icons -------- -->
   <section class="py-md-7 pb-5">
     <div class="container">
@@ -194,7 +194,7 @@
   </section>
   <!-- END Blogs w/ 3 images & quote & text -->
   <section class="bg-gradient-primary position-relative overflow-hidden">
-    <img src="../assets/img/shapes/waves-white.svg" alt="pattern-lines" class="position-absolute opacity-6">
+    <img src="{{ config.ASSETS_ROOT }}/img/shapes/waves-white.svg" alt="pattern-lines" class="position-absolute opacity-6">
     <div class="position-absolute w-100 z-inde-1 top-0 mt-n3">
       <svg width="100%" viewBox="0 -2 1920 157" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <title>wave-down</title>
@@ -213,15 +213,15 @@
           <div id="carouselExampleIndicator" class="carousel slide py-7" data-bs-ride="carousel">
             <div class="carousel-indicators justify-content-start ms-0">
               <a href="javascript:;">
-                <img src="../assets/img/team-4.jpg" alt="..." class="avatar avatar-sm avatar-scale-up shadow border-0 active" data-bs-target="#carouselExampleIndicator" data-bs-slide-to="0">
+                <img src="{{ config.ASSETS_ROOT }}/img/team-4.jpg" alt="..." class="avatar avatar-sm avatar-scale-up shadow border-0 active" data-bs-target="#carouselExampleIndicator" data-bs-slide-to="0">
                 <span class="text-white mx-2">&#124;</span>
               </a>
               <a href="javascript:;">
-                <img src="../assets/img/team-3.jpg" alt="..." class="avatar avatar-sm avatar-scale-up shadow border-0" data-bs-target="#carouselExampleIndicator" data-bs-slide-to="1">
+                <img src="{{ config.ASSETS_ROOT }}/img/team-3.jpg" alt="..." class="avatar avatar-sm avatar-scale-up shadow border-0" data-bs-target="#carouselExampleIndicator" data-bs-slide-to="1">
                 <span class="text-white mx-2">&#124;</span>
               </a>
               <a href="javascript:;">
-                <img src="../assets/img/team-2.jpg" alt="..." class="avatar avatar-sm avatar-scale-up shadow border-0" data-bs-target="#carouselExampleIndicator" data-bs-slide-to="2">
+                <img src="{{ config.ASSETS_ROOT }}/img/team-2.jpg" alt="..." class="avatar avatar-sm avatar-scale-up shadow border-0" data-bs-target="#carouselExampleIndicator" data-bs-slide-to="2">
               </a>
             </div>
             <div class="carousel-inner">
@@ -274,34 +274,34 @@
           <div class="row justify-content-center d-none d-md-flex">
             <div class="col-3 mb-4">
               <div class="d-block bg-white avatar avatar-lg rounded-circle p-3 mt-n4 ms-8 fadeIn2 fadeInBottom">
-                <img src="../assets/img/logos/small-logos/logo-asana.svg" alt="Logo Image">
+                <img src="{{ config.ASSETS_ROOT }}/img/logos/small-logos/logo-asana.svg" alt="Logo Image">
               </div>
             </div>
             <div class="col-4 mb-4">
               <div class="d-block bg-white avatar avatar-lg rounded-circle p-3 ms-8 mt-n6 fadeIn1 fadeInBottom">
-                <img src="../assets/img/logos/small-logos/logo-slack.svg" alt="Logo Image">
+                <img src="{{ config.ASSETS_ROOT }}/img/logos/small-logos/logo-slack.svg" alt="Logo Image">
               </div>
             </div>
             <div class="col-4 mb-4">
               <div class="d-block bg-white avatar avatar-lg rounded-circle p-3 ms-6 mt-2 fadeIn3 fadeInBottom">
-                <img src="../assets/img/logos/small-logos/logo-google-drive.svg" alt="Logo Image">
+                <img src="{{ config.ASSETS_ROOT }}/img/logos/small-logos/logo-google-drive.svg" alt="Logo Image">
               </div>
             </div>
           </div>
           <div class="row justify-content-end d-none d-md-flex">
             <div class="col-4 my-4">
               <div class="d-block bg-white avatar avatar-lg rounded-circle p-3 ms-4 fadeIn1 fadeInBottom">
-                <img class="avatar-img" src="../assets/img/logos/small-logos/logo-shopify.svg" alt="Logo Image">
+                <img class="avatar-img" src="{{ config.ASSETS_ROOT }}/img/logos/small-logos/logo-shopify.svg" alt="Logo Image">
               </div>
             </div>
             <div class="col-3 my-4">
               <div class="d-block bg-white avatar avatar-lg rounded-circle p-3 me-auto fadeIn1 fadeInBottom">
-                <img class="avatar-img" src="../assets/img/logos/small-logos/logo-apple.svg" alt="Logo Image">
+                <img class="avatar-img" src="{{ config.ASSETS_ROOT }}/img/logos/small-logos/logo-apple.svg" alt="Logo Image">
               </div>
             </div>
             <div class="col-3 my-4">
               <div class="d-block bg-white avatar avatar-lg rounded-circle p-3 fadeIn3 fadeInBottom ms-3 mt-3">
-                <img class="avatar-img" src="../assets/img/logos/small-logos/logo-invision.svg" alt="Logo Image">
+                <img class="avatar-img" src="{{ config.ASSETS_ROOT }}/img/logos/small-logos/logo-invision.svg" alt="Logo Image">
               </div>
             </div>
           </div>
@@ -309,14 +309,14 @@
             <div class="col-6">
               <!-- Logo -->
               <div class="d-block bg-white avatar avatar-lg rounded-circle p-3 ms-auto mt-5 fadeIn2 fadeInBottom">
-                <img class="avatar-img" src="../assets/img/logos/small-logos/logo-atlassian.svg" alt="Logo Image">
+                <img class="avatar-img" src="{{ config.ASSETS_ROOT }}/img/logos/small-logos/logo-atlassian.svg" alt="Logo Image">
               </div>
               <!-- End Logo -->
             </div>
             <div class="col-6 mt-6">
               <!-- Logo -->
               <div class="d-block bg-white avatar avatar-lg rounded-circle p-3 mx-auto mt-n3 fadeIn3 fadeInBottom">
-                <img class="avatar-img" src="../assets/img/logos/small-logos/logo-weave.svg" alt="Logo Image">
+                <img class="avatar-img" src="{{ config.ASSETS_ROOT }}/img/logos/small-logos/logo-weave.svg" alt="Logo Image">
               </div>
               <!-- End Logo -->
             </div>
@@ -467,4 +467,4 @@
     </div>
   </section>
 
-  {% include "main-includes/footer.html" %}
+{% endblock content %}

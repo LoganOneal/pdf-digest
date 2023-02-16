@@ -14,25 +14,24 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
-  <!-- Icons -->
-  <link href="./assets/css/nucleo-icons.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="{{ config.ASSETS_ROOT }}/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="{{ config.ASSETS_ROOT }}/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-
-  <!-- Soft UI Design System -->
-  <link type="text/css" href="./assets/css/soft-design-system-pro.min.css" rel="stylesheet">
+  <link href="{{ config.ASSETS_ROOT }}/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="{{ config.ASSETS_ROOT }}/css/soft-design-system-pro.css?v=1.1.1" rel="stylesheet" />
 </head>
 <body>
-    <h1>Hello, world!</h1>
-    
-    {% include "main-includes/navigation.html" %} 
+  {% include "main-includes/navigation.html" %} 
 
-    {% block content %}{% endblock content %}
+  {% block content %}{% endblock content %}
 
-    <!-- Core JS Files -->
-    {% include "dashboard-includes/scripts.html" %}
+  {% include "main-includes/footer.html" %} 
 
-    <!-- Specific JS goes HERE --> 
-    {% block javascripts %}{% endblock javascripts %} 
+  {% include "dashboard-includes/scripts.html" %}
 
-  </body>
+  {% block javascripts %}{% endblock javascripts %} 
+</body>
 </html>
