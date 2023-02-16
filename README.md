@@ -1,8 +1,8 @@
 # [Doc-Digest Flask](https://github.com/LoganOneal/doc-digest)
 
 ## TODO 
-
-SETUP ADMIN: https://stackoverflow.com/questions/61939800/role-based-authorization-in-flask-login
+- Add User Roles
+- SETUP ADMIN: https://stackoverflow.com/questions/61939800/role-based-authorization-in-flask-login
 
 ## Resources
 > https://flask.palletsprojects.com/

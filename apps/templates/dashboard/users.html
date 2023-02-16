@@ -1,4 +1,4 @@
-{% extends 'layouts/base.html' %}
+{% extends 'dashboard-layouts/base.html' %}
 
 {% block title %} Tables {% endblock title %}
 
@@ -22,8 +22,8 @@
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">ID</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -44,7 +44,7 @@
                       <td>
                         <p class="text-xs font-weight-bold mb-0">{{ user.email }}</p>
                       </td>
-                      <td class="align-middle text-center text-sm">
+                      <td>
                         <span class="badge badge-sm bg-gradient-success">TEST ROLE</span>
                       </td>
                       <td class="align-middle">
@@ -63,7 +63,7 @@
         </div>
       </div>
 
-      {% include "includes/footer.html" %}
+      {% include "dashboard-includes/footer.html" %}
 
     </div>
     
