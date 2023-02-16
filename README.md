@@ -1,7 +1,6 @@
 # [Doc-Digest Flask](https://github.com/LoganOneal/doc-digest)
 
 
-
 ## Resources
 > https://flask.palletsprojects.com/
 >https://grobid.readthedocs.io/en/latest/Grobid-service/
@@ -33,7 +32,6 @@ $ docker-compose up --build
 ```
 
 Visit `http://localhost:5085` in your browser. The app should be up & running.
-
 
 <br />
 
