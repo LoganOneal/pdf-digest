@@ -69,7 +69,7 @@ def login():
                                form=login_form)
 
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard_blueprint.index'))
+        return redirect(url_for('main_blueprint.index'))
     else:
         return render_template('accounts/login.html',
                                form=login_form) 
@@ -174,19 +174,19 @@ def logout():
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
-    return render_template('dashboard/page-403.html'), 403
+    return render_template('shared/page-403.html'), 403
 
 
 @blueprint.errorhandler(403)
 def access_forbidden(error):
-    return render_template('dashboard/page-403.html'), 403
+    return render_template('shared/page-403.html'), 403
 
 
 @blueprint.errorhandler(404)
 def not_found_error(error):
-    return render_template('dashboard/page-404.html'), 404
+    return render_template('shared/page-404.html'), 404
 
 
 @blueprint.errorhandler(500)
 def internal_error(error):
-    return render_template('dashboard/page-500.html'), 500
+    return render_template('shared/page-500.html'), 500

@@ -49,10 +49,10 @@ def route_template(template):
         return render_template("dashboard/" + template, segment=segment, API_GENERATOR=len(API_GENERATOR))
 
     except TemplateNotFound:
-        return render_template('dashboard/page-404.html'), 404
+        return render_template('shared/page-404.html'), 404
 
     except:
-        return render_template('dashboard/page-500.html'), 500
+        return render_template('shared/page-500.html'), 500
 
 
 # Helper - Extract current page name from request
