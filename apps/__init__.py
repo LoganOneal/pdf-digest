@@ -13,7 +13,6 @@ from flask_cors import CORS
 from importlib import import_module
 from apps.grobid_client import Client
 
-
 db = SQLAlchemy()
 login_manager = LoginManager()
 grobid_client = Client(base_url="http://localhost:8070/api")
@@ -76,4 +75,5 @@ def create_app(config):
     app.register_blueprint(github_blueprint, url_prefix="/login") 
     
     configure_database(app)
+
     return app

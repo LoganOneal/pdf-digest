@@ -15,6 +15,10 @@ from apps.config import API_GENERATOR
 def index():
     return render_template('main/index.html', segment='index')
 
+@blueprint.route('/file-upload')
+@login_required
+def file_upload():
+    return render_template('main/file-upload.html', segment='file-upload')
 
 @blueprint.route('/wizard')
 @login_required
