@@ -20,6 +20,11 @@ def index():
 def file_upload():
     return render_template('main/file-upload.html', segment='file-upload')
 
+@blueprint.route('/pdf-explore')
+@login_required
+def pdf_explore():
+    return render_template('main/pdf-explore.html', segment='pdf-explore')
+
 @blueprint.route('/wizard')
 @login_required
 def wizard():
