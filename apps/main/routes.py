@@ -9,6 +9,7 @@ from flask_login import login_required
 from jinja2 import TemplateNotFound
 
 from apps.config import API_GENERATOR
+from apps.models import File
 
 @blueprint.route('/index')
 @login_required
@@ -19,6 +20,12 @@ def index():
 @login_required
 def file_upload():
     return render_template('main/file-upload.html', segment='file-upload')
+
+@blueprint.route('/my-files')
+@login_required
+def my_files():
+    files = File.query.all()
+    return render_template('main/my-files.html', files=files, segment='my-files')
 
 @blueprint.route('/pdf-explore')
 @login_required
