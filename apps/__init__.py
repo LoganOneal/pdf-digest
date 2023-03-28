@@ -60,9 +60,9 @@ def create_app(config):
     app = Flask(__name__)
     app.config.from_object(config)
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-    CORS(app)
 
-    # CORS Headers 
+    # CORS setup
+    CORS(app) 
     @app.after_request
     def after_request(response):
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')

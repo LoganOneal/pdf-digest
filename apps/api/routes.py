@@ -1,4 +1,4 @@
-from flask import request, send_file, redirect, url_for
+from flask import jsonify, request, send_file, redirect, url_for
 from flask_restx import Api, Resource
 from io import BytesIO
 
@@ -6,7 +6,6 @@ from apps.authentication.decorators import token_required
 from flask_login import current_user
 
 from apps.api import blueprint
-from apps.api.util import parse as parse_util
 from apps.models    import *
 from apps.grobid_client.types import UNSET 
 
@@ -39,9 +38,6 @@ class FileRoute(Resource):
     
     @token_required
     def post(self):
-            print("AAAAAAA")
-            print(current_user.is_authenticated)
-            print(current_user.get_id())
             file = request.files['file']
             if file.filename == '':
                 print("No file selected for uploading")
@@ -58,6 +54,7 @@ class FileRoute(Resource):
                               )
                 db.session.add(new_file)
                 db.session.commit()
+                #await parse(new_file.id)
                 return {
                 'message': 'File successfully uploaded',
                 'success': True
@@ -83,57 +80,44 @@ class FileRoute(Resource):
                    'message': 'record deleted!',
                    'success': True
                }, 200
-
-@blueprint.route('/file/parse/<int:file_id>/')
-async def parse(file_id):
-    file = File.query.filter_by(id=file_id).first()
-
-    article = await parse_util(file)
-
-    article_model = ArticleModel(title=article.title,user_id=current_user.get_id())
-    db.session.add(article_model)
-
-    for section in article.sections:
-        name = None
-        num = None
-        if section.name is not UNSET:
-            name = section.name
-        if section.num is not UNSET:
-            num = section.num
-
-        section_model = Section(name=name, num=num)
-        article_model.sections.append(section_model)
-        db.session.add(section_model)
-
-        for paragraph in section.paragraphs:
-            paragraph_model = Paragraph(text=paragraph.text)
-            section_model.paragraphs.append(paragraph_model)
-            db.session.add(paragraph_model)
     
-        db.session.commit() 
+from apps.tasks.tasks import parse_task
 
-    return "Done!"
+@blueprint.route('/parse/<int:file_id>')
+def parse(file_id):
 
-@blueprint.route('/file/summarize/<articleID>')
-async def summarize(articleID):
-    article = ArticleModel.query.filter_by(id=articleID).first()
+    task = parse_task.apply_async(args=[file_id])
 
+    return jsonify({}), 202, {'Location': url_for('taskstatus',
+                                                  task_id=task.id)}
 
-    paragraphs = Section.query.filter_by(id=5).first().paragraphs
-
-    text = ""
-
-    for par in paragraphs:
-        text += par.text
-
-    print("TEXT: ", text)
-
-
-    summary = bart_summarize(text, 100)
-
-    print("SUMMARY: ", summary)
-
-
-    flash('File summarized!', category='success')
-    return redirect(url_for('main.dashboard'))
+@blueprint.route('/status/<task_id>')
+def taskstatus(task_id):
+    task = parse_task.AsyncResult(task_id)
+    if task.state == 'PENDING':
+        # job did not start yet
+        response = {
+            'state': task.state,
+            'current': 0,
+            'total': 1,
+            'status': 'Pending...'
+        }
+    elif task.state != 'FAILURE':
+        response = {
+            'state': task.state,
+            'current': task.info.get('current', 0),
+            'total': task.info.get('total', 1),
+            'status': task.info.get('status', '')
+        }
+        if 'result' in task.info:
+            response['result'] = task.info['result']
+    else:
+        # something went wrong in the background job
+        response = {
+            'state': task.state,
+            'current': 1,
+            'total': 1,
+            'status': str(task.info),  # this is the exception raised
+        }
+    return jsonify(response)
 
