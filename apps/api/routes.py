@@ -7,7 +7,8 @@ from flask_login import current_user
 
 from apps.api import blueprint
 from apps.models    import *
-from apps.grobid_client.types import UNSET 
+from apps.grobid_client.types import UNSET
+from apps.tasks import parse_task, send_async_email 
 
 api = Api(blueprint)
 
@@ -81,14 +82,17 @@ class FileRoute(Resource):
                    'success': True
                }, 200
     
-from apps.tasks.tasks import parse_task
 
 @blueprint.route('/parse/<int:file_id>')
 def parse(file_id):
 
     task = parse_task.apply_async(args=[file_id])
+    #task = send_async_email.apply_async()
 
-    return jsonify({}), 202, {'Location': url_for('taskstatus',
+    print( url_for('api_blueprint.taskstatus', task_id=task.id))
+
+    return jsonify({'Location': url_for('api_blueprint.taskstatus',
+                                                  task_id=task.id)}), 202, {'Location': url_for('api_blueprint.taskstatus',
                                                   task_id=task.id)}
 
 @blueprint.route('/status/<task_id>')

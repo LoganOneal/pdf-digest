@@ -1,17 +1,24 @@
 import os
-from apps import db, grobid_client
+import time
+from apps import celery, db, grobid_client
 from flask_login import current_user
-from apps.tasks import celery
 from apps.grobid_client.api.pdf import process_fulltext_document
-from apps.models import File, ArticleModel, Section, Paragraph
+from apps.models import ArticleModel, Section, Paragraph
 from apps.grobid_client.models import Article, ProcessForm
 from apps.grobid_client.types import TEI, File, UNSET
-import time 
+from apps.models    import *
+from celery.signals import task_postrun
 
 BASE_TEMP_DIR = 'temp'
 
 @celery.task
-def parse_task(file_id) -> Article:
+def send_async_email():
+    """Background task to send an email with Flask-Mail."""
+    time.sleep(10)
+    print("test")
+
+@celery.task
+def parse_task(file_id):
     print("PARSE TASK!!")
 
     file = File.query.filter_by(id=file_id).first()
@@ -66,3 +73,11 @@ def parse_task(file_id) -> Article:
         db.session.commit() 
 
     return article
+
+@task_postrun.connect
+def close_session(*args, **kwargs):
+    # Flask SQLAlchemy will automatically create new sessions for you from 
+    # a scoped session factory, given that we are maintaining the same app
+    # context, this ensures tasks have a fresh session (e.g. session errors 
+    # won't propagate across tasks)
+    db.session.remove()

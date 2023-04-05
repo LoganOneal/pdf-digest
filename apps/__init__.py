@@ -9,13 +9,18 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-
+from celery import Celery
 from importlib import import_module
 from apps.grobid_client import Client
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 grobid_client = Client(base_url="http://localhost:8070/api")
+
+celery = Celery(__name__)
+celery.conf.broker_url = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379")
+celery.conf.result_backend = os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost:6379")
+celery.autodiscover_tasks()
 
 def register_extensions(app):
     db.init_app(app)
@@ -71,6 +76,8 @@ def create_app(config):
 
     register_extensions(app)
     register_blueprints(app)
+
+    celery.config_from_object(app.config)
 
     app.register_blueprint(github_blueprint, url_prefix="/login") 
     
