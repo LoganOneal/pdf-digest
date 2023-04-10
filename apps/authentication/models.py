@@ -9,7 +9,7 @@ import jwt
 from sqlalchemy.orm import relationship
 from flask_dance.consumer.storage.sqla import OAuthConsumerMixin
 
-from apps import db, login_manager
+from apps.extensions import db, login_manager
 
 from apps.authentication.util import hash_pass
 

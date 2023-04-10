@@ -8,7 +8,7 @@ from flask_login import current_user
 from apps.api import blueprint
 from apps.models    import *
 from apps.grobid_client.types import UNSET
-from apps.tasks import parse_task, send_async_email 
+import apps.tasks as tasks
 
 api = Api(blueprint)
 
@@ -86,18 +86,17 @@ class FileRoute(Resource):
 @blueprint.route('/parse/<int:file_id>')
 def parse(file_id):
 
-    task = parse_task.apply_async(args=[file_id])
-    #task = send_async_email.apply_async()
+    task = tasks.parse.apply_async([file_id])
 
     print( url_for('api_blueprint.taskstatus', task_id=task.id))
-
+         
     return jsonify({'Location': url_for('api_blueprint.taskstatus',
                                                   task_id=task.id)}), 202, {'Location': url_for('api_blueprint.taskstatus',
                                                   task_id=task.id)}
 
 @blueprint.route('/status/<task_id>')
 def taskstatus(task_id):
-    task = parse_task.AsyncResult(task_id)
+    task = tasks.do_some_stuff.AsyncResult(task_id)
     if task.state == 'PENDING':
         # job did not start yet
         response = {

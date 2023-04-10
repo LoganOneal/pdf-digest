@@ -3,7 +3,7 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
-from apps import db
+from apps.extensions import db
 from sqlalchemy.sql import func
 from sqlalchemy import Enum
 

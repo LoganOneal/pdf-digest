@@ -28,20 +28,27 @@ $ docker pull grobid/grobid:0.7.2
 $ docker run --rm -p 8070:8070 grobid/grobid:0.7.2
 ```
 
-> 👉 **Step 1** - Start Redis Service in `Docker`
+> 👉 **Step 2** - Start Redis Service in `Docker`
 
 ```bash
 $ docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server:latest
 ```
 
 
-> 👉 **Step 1** - Start Celery Service
+> 👉 **Step 3** - Start Celery Service
 
 ```bash
 $ celery --app apps.tasks worker --loglevel=info
 ```
 
-> 👉 **Step 2** - Start the APP in `Docker`
+
+> 👉 **Step 4** Monitor Celery Tasks with Flower
+
+```bash
+$ celery -A apps.tasks flower --loglevel=info
+```
+
+> 👉 **OR** - Start the APP in `Docker`
 
 ```bash
 $ docker-compose up --build 

@@ -1,34 +1,39 @@
 import os
-import time
-from apps import celery, db, grobid_client
+
+from celery.signals import task_prerun
+from flask import g
 from flask_login import current_user
+
+import apps.grobid_client.types as grobid_types
+from apps.extensions import db
+from apps.factory import create_celery_app
 from apps.grobid_client.api.pdf import process_fulltext_document
-from apps.models import ArticleModel, Section, Paragraph
 from apps.grobid_client.models import Article, ProcessForm
-from apps.grobid_client.types import TEI, File, UNSET
-from apps.models    import *
-from celery.signals import task_postrun
+from apps.models import ArticleModel, File, Paragraph, Section
+
+celery = create_celery_app()
 
 BASE_TEMP_DIR = 'temp'
 
-@celery.task
-def send_async_email():
-    """Background task to send an email with Flask-Mail."""
-    time.sleep(10)
-    print("test")
 
-@celery.task
-def parse_task(file_id):
-    print("PARSE TASK!!")
+@celery.task()
+def parse(file_id):
 
     file = File.query.filter_by(id=file_id).first()
 
-    print("File: ", file.filename)
+    if file is None:
+        return {
+                   'message': 'matching record not found',
+                   'success': False
+               }, 404
 
     if file.extension != 'pdf':
-        print('File is not a PDF!')
-        return None
-
+        return {
+                   'message': 'File format not supported',
+                   'success': False
+               }, 400
+    
+    # do something with the file
     os.makedirs(BASE_TEMP_DIR, exist_ok=True)
     pdf_file = os.path.join(BASE_TEMP_DIR, f'{file.id}.pdf')
 
@@ -43,7 +48,7 @@ def parse_task(file_id):
         r = process_fulltext_document.sync_detailed(client=grobid_client, multipart_data=form)
 
         if r.is_success:
-            article: Article = TEI.parse(r.content, figures=False)
+            article: Article = grobid_types.TEI.parse(r.content, figures=False)
             assert article.title
         else:
             print("Error: failed to parse file")
@@ -56,9 +61,9 @@ def parse_task(file_id):
     for section in article.sections:
         name = None
         num = None
-        if section.name is not UNSET:
+        if section.name is not grobid_types.UNSET:
             name = section.name
-        if section.num is not UNSET:
+        if section.num is not grobid_types.UNSET:
             num = section.num
 
         section_model = Section(name=name, num=num)
@@ -72,12 +77,6 @@ def parse_task(file_id):
     
         db.session.commit() 
 
-    return article
 
-@task_postrun.connect
-def close_session(*args, **kwargs):
-    # Flask SQLAlchemy will automatically create new sessions for you from 
-    # a scoped session factory, given that we are maintaining the same app
-    # context, this ensures tasks have a fresh session (e.g. session errors 
-    # won't propagate across tasks)
-    db.session.remove()
+
+

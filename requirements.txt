@@ -33,3 +33,4 @@ celery==5.2.3
 Flask-WTF==1.0.0
 pytest==7.0.1
 redis==4.1.4
+flower

@@ -18,7 +18,7 @@ from flask_login import (
 
 from flask_dance.contrib.github import github
 
-from apps import db, login_manager
+from apps.extensions import db, login_manager
 from apps.authentication import blueprint
 from apps.authentication.forms import LoginForm, CreateAccountForm
 from apps.authentication.models import User
