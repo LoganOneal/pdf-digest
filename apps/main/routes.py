@@ -5,7 +5,7 @@ Copyright (c) 2019 - present AppSeed.us
 
 from apps.main import blueprint
 from flask import render_template, request
-from flask_login import login_required
+from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 
 from apps.config import API_GENERATOR
@@ -16,15 +16,10 @@ from apps.models import File
 def index():
     return render_template('main/index.html', segment='index')
 
-@blueprint.route('/file-upload')
-@login_required
-def file_upload():
-    return render_template('main/file-upload.html', segment='file-upload')
-
 @blueprint.route('/my-files')
 @login_required
 def my_files():
-    files = File.query.all()
+    files = File.query.filter_by(user_id=current_user.get_id()).all()
     return render_template('main/my-files.html', files=files, segment='my-files')
 
 @blueprint.route('/pdf-explore')
