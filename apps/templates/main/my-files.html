@@ -149,10 +149,18 @@
         maxFiles: 1,
         maxFilesize: 512, // MB
         addRemoveLinks: true,
-        accept: function(file, done) {
+        /*accept: function(file, done) {
             done();
             location.reload()
+        }*/
+    });
+
+    myDropzone.on("complete", function (file) {
+        if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+            location.reload()
         }
+
+        md.removeFile(file); // remove file from the zone.
     });
 </script>
 {% endblock javascripts %}
