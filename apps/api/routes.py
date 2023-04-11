@@ -86,7 +86,7 @@ class FileRoute(Resource):
 @blueprint.route('/parse/<int:file_id>')
 def parse(file_id):
 
-    task = tasks.parse.apply_async([file_id])
+    task = tasks.parse.apply_async([file_id, current_user.get_id()])
 
     print( url_for('api_blueprint.taskstatus', task_id=task.id))
          

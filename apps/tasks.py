@@ -4,6 +4,7 @@ from celery.signals import task_prerun
 from flask import g
 from flask_login import current_user
 
+from apps.extensions import grobid_client
 import apps.grobid_client.types as grobid_types
 from apps.extensions import db
 from apps.factory import create_celery_app
@@ -17,7 +18,7 @@ BASE_TEMP_DIR = 'temp'
 
 
 @celery.task()
-def parse(file_id):
+def parse(file_id, user_id):
 
     file = File.query.filter_by(id=file_id).first()
 
@@ -43,7 +44,7 @@ def parse(file_id):
     with open(pdf_file,"rb") as fin:
         form = ProcessForm(
             segment_sentences="0",
-            input_=File(file_name=file.filename, payload=fin, mime_type="application/pdf"),
+            input_=grobid_types.File(file_name=file.filename, payload=fin, mime_type="application/pdf"),
         )
         r = process_fulltext_document.sync_detailed(client=grobid_client, multipart_data=form)
 
@@ -55,7 +56,7 @@ def parse(file_id):
 
     os.remove(pdf_file)
 
-    article_model = ArticleModel(title=article.title,user_id=current_user.get_id())
+    article_model = ArticleModel(title=article.title,user_id=user_id)
     db.session.add(article_model)
 
     for section in article.sections:
